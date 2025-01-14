@@ -139,7 +139,7 @@ export default function Unit1Terminology() {
             />
           </svg>
           <p className="text-sm text-gray-600 mt-4">
-            <strong>Figure 3 - Context Window:</strong> Demonstration of the model's context window, showing how tokens (T1-T10) 
+            <strong>Figure 3 - Context Window:</strong> Demonstration of the models context window, showing how tokens (T1-T10) 
             are processed sequentially. The green dashed border indicates the current active context window, 
             with dimmed tokens representing those outside the window.
           </p>
@@ -183,7 +183,7 @@ export default function Unit1Terminology() {
             <path d="M200 240 L200 260" stroke="#94A3B8" strokeWidth="2" />
           </svg>
           <p className="text-sm text-gray-600 mt-4">
-            <strong>Figure 4 - Basic Transformer Architecture:</strong> Simplified view of the transformer's core components, 
+            <strong>Figure 4 - Basic Transformer Architecture:</strong> Simplified view of the transformers core components, 
             showing the flow from input through embedding, positional encoding, self-attention, and feed-forward layers.
           </p>
         </div>

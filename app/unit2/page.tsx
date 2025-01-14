@@ -105,7 +105,7 @@ export default function Unit2() {
             <div className="bg-gray-50 p-4 rounded-lg mb-4">
               <h4 className="font-bold mb-2">Key Concepts:</h4>
               <ul className="list-disc list-inside space-y-2">
-                <li>Create a reusable wrapper around OpenAI's API</li>
+                <li>Create a reusable wrapper around OpenAIs API</li>
                 <li>Handle authentication and provide a simplified interface</li>
                 <li>Support both basic chat completions and function calling</li>
                 <li>Enable AI assistants to perform actions through function definitions</li>
@@ -197,7 +197,7 @@ response = client.complete_chat(
             <div className="bg-gray-50 p-4 rounded-lg mb-4">
               <h4 className="font-bold mb-2">Key Concepts:</h4>
               <ul className="list-disc list-inside space-y-2">
-                <li>Similar to OpenAI but for Anthropic's Claude model</li>
+                <li>Similar to OpenAI but for Anthropics Claude model</li>
                 <li>Simpler interface focused on single-message completions</li>
                 <li>Different providers have different API structures</li>
                 <li>Demonstrates proper error handling</li>
@@ -333,7 +333,7 @@ prompt = create_cot_prompt(question)
                 <li>Handle tasks without providing examples</li>
                 <li>Rely on clear instructions and format specifications</li>
                 <li>Best for simpler, well-defined tasks</li>
-                <li>Useful when examples aren't available</li>
+                <li>Useful when examples arent available</li>
               </ul>
             </div>
             <CodeBlock code={`

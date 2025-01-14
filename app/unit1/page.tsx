@@ -16,7 +16,7 @@ export default function Unit1() {
             <p className="mb-4 text-gray-700">Core concepts in generative AI include:</p>
             <ul className="list-disc list-inside mb-4 text-gray-700">
               <li>Training data and distributions - The foundation of learning patterns</li>
-              <li>Latent spaces - The AI's "imagination space" where concepts are represented</li>
+              <li>Latent spaces - The AI&apos;s &quot;imagination space&quot; where concepts are represented</li>
               <li>Sampling strategies - Methods for selecting specific outputs</li>
               <li>Quality metrics - Measuring the effectiveness of generations</li>
               <li>Control methods - Techniques for guiding the generation process</li>

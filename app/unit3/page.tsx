@@ -1,586 +1,481 @@
 import CodeBlock from '../components/CodeBlock';
+import Layout from '../layout';
 
 export default function Unit3() {
   return (
-
+    <Layout>
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-blue-600">Unit 3: Computer Graphics and Visualization</h1>
+        <h1 className="text-4xl font-bold mb-8 text-blue-600">Unit 3: Advanced LLM Concepts</h1>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">1. Fundamentals of Computer Graphics</h2>
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">1. Retrieval Augmented Generation (RAG)</h2>
           <div className="mb-6">
             <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Computer graphics involves creating, manipulating, and storing visual content using computers. The field encompasses both 2D and 3D graphics, with applications ranging from user interfaces to virtual reality.</p>
-            <p className="mb-4 text-gray-700">Key concepts in computer graphics include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Pixels and resolution</li>
-              <li>Color models (RGB, CMYK, HSL)</li>
-              <li>Vector vs. raster graphics</li>
-              <li>Coordinate systems</li>
-              <li>Rendering pipelines</li>
-            </ul>
+            <p className="mb-4 text-gray-700">
+              RAG combines the power of retrieval systems with generative AI to produce more accurate and contextual responses.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="bg-white p-4 rounded-lg shadow">
+                <h4 className="font-bold mb-2">Core Components</h4>
+                <ul className="list-disc list-inside text-gray-700">
+                  <li>Document Processing</li>
+                  <li>Vector Embeddings</li>
+                  <li>Similarity Search</li>
+                  <li>Context Integration</li>
+                </ul>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow">
+                <h4 className="font-bold mb-2">Key Benefits</h4>
+                <ul className="list-disc list-inside text-gray-700">
+                  <li>Up-to-date Information</li>
+                  <li>Reduced Hallucination</li>
+                  <li>Domain Adaptation</li>
+                  <li>Source Attribution</li>
+                </ul>
+              </div>
+            </div>
           </div>
+
           <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Basic Pixel Manipulation</h4>
+            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Example</h3>
+            <div className="bg-gray-50 p-4 rounded-lg mb-4">
+              <h4 className="font-bold mb-2">Key Concepts:</h4>
+              <ul className="list-disc list-inside space-y-2">
+                <li>Document loading and processing</li>
+                <li>Vector embedding generation</li>
+                <li>Similarity search implementation</li>
+                <li>Query processing and response generation</li>
+              </ul>
+            </div>
+            <h4 className="text-xl mb-2 text-blue-300">RAG Implementation</h4>
             <CodeBlock code={`
-import numpy as np
-from PIL import Image
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
 
-def create_gradient():
-    # Create a 256x256 RGB gradient
-    width = 256
-    height = 256
-    image = np.zeros((height, width, 3), dtype=np.uint8)
+class RAGSystem:
+    def __init__(self, api_key: str):
+        self.embeddings = OpenAIEmbeddings(api_key=api_key)
+        self.text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200
+        )
+        self.vector_store = None
     
-    for y in range(height):
-        for x in range(width):
-            # Create a gradient from black to white
-            value = int((x + y) / 2)
-            image[y, x] = [value, value, value]
+    def load_documents(self, file_path: str):
+        """Load and process documents."""
+        loader = TextLoader(file_path)
+        documents = loader.load()
+        chunks = self.text_splitter.split_documents(documents)
+        
+        # Create vector store
+        self.vector_store = Chroma.from_documents(
+            documents=chunks,
+            embedding=self.embeddings
+        )
     
-    return Image.fromarray(image)
-
-# Create and save the gradient
-gradient = create_gradient()
-gradient.save('gradient.png')
-            `} language="python" />
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">2. 2D Graphics and Drawing</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">2D graphics form the foundation of digital imaging and user interface design. Understanding basic shapes, paths, and transformations is essential for creating effective visual content.</p>
-            <p className="mb-4 text-gray-700">Important 2D graphics concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Basic shapes (lines, rectangles, circles)</li>
-              <li>Paths and curves</li>
-              <li>Transformations (translation, rotation, scaling)</li>
-              <li>Fill and stroke properties</li>
-              <li>Canvas and SVG rendering</li>
-            </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Drawing Shapes with Canvas</h4>
-            <CodeBlock code={`
-// Create a simple shape drawing function
-function drawShapes(canvas) {
-    const ctx = canvas.getContext('2d');
-    
-    // Rectangle
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(10, 10, 100, 50);
-    
-    // Circle
-    ctx.beginPath();
-    ctx.arc(200, 35, 25, 0, Math.PI * 2);
-    ctx.fillStyle = 'red';
-    ctx.fill();
-    
-    // Triangle
-    ctx.beginPath();
-    ctx.moveTo(300, 10);
-    ctx.lineTo(350, 60);
-    ctx.lineTo(250, 60);
-    ctx.closePath();
-    ctx.fillStyle = 'green';
-    ctx.fill();
-}
-            `} language="javascript" />
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">3. 3D Graphics and Modeling</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">3D graphics add depth to visual representations, enabling the creation of realistic scenes and interactive environments. Understanding 3D concepts is crucial for game development, CAD, and visualization.</p>
-            <p className="mb-4 text-gray-700">Key 3D graphics concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Vertices, edges, and faces</li>
-              <li>3D transformations and matrices</li>
-              <li>Lighting and shading</li>
-              <li>Texture mapping</li>
-              <li>Camera perspectives</li>
-            </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Basic 3D Transformations</h4>
-            <CodeBlock code={`
-import numpy as np
-
-def rotate_3d_point(point, angle_x, angle_y, angle_z):
-    # Create rotation matrices
-    def rotation_matrix(angle, axis):
-        c = np.cos(angle)
-        s = np.sin(angle)
-        if axis == 'x':
-            return np.array([[1, 0, 0],
-                           [0, c, -s],
-                           [0, s, c]])
-        elif axis == 'y':
-            return np.array([[c, 0, s],
-                           [0, 1, 0],
-                           [-s, 0, c]])
-        else:  # z
-            return np.array([[c, -s, 0],
-                           [s, c, 0],
-                           [0, 0, 1]])
-    
-    # Apply rotations
-    point = np.dot(rotation_matrix(angle_x, 'x'), point)
-    point = np.dot(rotation_matrix(angle_y, 'y'), point)
-    point = np.dot(rotation_matrix(angle_z, 'z'), point)
-    
-    return point
+    def query(self, question: str, k: int = 3) -> list:
+        """Retrieve relevant documents for a query."""
+        if not self.vector_store:
+            raise ValueError("No documents loaded")
+        
+        return self.vector_store.similarity_search(question, k=k)
 
 # Example usage
-point = np.array([1, 0, 0])
-rotated = rotate_3d_point(point, np.pi/4, 0, 0)
-print(f"Original point: {point}")
-print(f"Rotated point: {rotated}")
+rag = RAGSystem('your-api-key')
+rag.load_documents('knowledge_base.txt')
+relevant_docs = rag.query("What are the benefits of RAG?")
             `} language="python" />
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">4. Data Visualization</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Data visualization transforms raw data into meaningful visual representations, making complex information more accessible and understandable.</p>
-            <p className="mb-4 text-gray-700">Important visualization concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Chart types and their uses</li>
-              <li>Visual encoding principles</li>
-              <li>Interactive visualizations</li>
-              <li>Color theory in visualization</li>
-              <li>Data-to-visual mapping</li>
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">2. Vector Databases and Embeddings</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Vector Database Types</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>FAISS (Facebook AI Similarity Search)</li>
+                <li>Pinecone</li>
+                <li>Weaviate</li>
+                <li>Milvus</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Key Features</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Efficient similarity search</li>
+                <li>Scalable vector storage</li>
+                <li>Real-time updates</li>
+                <li>Multi-modal support</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+            <h4 className="font-bold mb-2">Understanding Vector Embeddings</h4>
+            <p className="mb-4">
+              Vector embeddings are numerical representations of text that capture semantic meaning:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>High-dimensional vectors (typically 768-1536 dimensions)</li>
+              <li>Similar meanings have similar vector representations</li>
+              <li>Enable efficient semantic search</li>
+              <li>Can be used for clustering and classification</li>
             </ul>
           </div>
+
           <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Creating a Basic Chart</h4>
+            <h3 className="text-2xl font-medium mb-2 text-blue-400">Working with Embeddings</h3>
             <CodeBlock code={`
-import matplotlib.pyplot as plt
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
 import numpy as np
 
-def create_visualization(data, labels):
-    # Create figure and axis
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+class EmbeddingSystem:
+    def __init__(self, api_key: str):
+        self.embeddings = OpenAIEmbeddings(api_key=api_key)
+        self.vector_store = None
     
-    # Bar chart
-    ax1.bar(labels, data)
-    ax1.set_title('Bar Chart')
-    ax1.set_ylabel('Values')
+    def create_embeddings(self, texts: list[str]):
+        """Generate embeddings for a list of texts."""
+        return self.embeddings.embed_documents(texts)
     
-    # Pie chart
-    ax2.pie(data, labels=labels, autopct='%1.1f%%')
-    ax2.set_title('Pie Chart')
+    def build_vector_store(self, texts: list[str]):
+        """Create a FAISS vector store from texts."""
+        self.vector_store = FAISS.from_texts(
+            texts,
+            self.embeddings
+        )
     
-    return fig
+    def similarity_search(self, query: str, k: int = 5):
+        """Find similar texts using vector similarity."""
+        if not self.vector_store:
+            raise ValueError("Vector store not initialized")
+        
+        return self.vector_store.similarity_search(query, k=k)
 
 # Example usage
-data = [30, 20, 25, 15]
-labels = ['A', 'B', 'C', 'D']
-fig = create_visualization(data, labels)
-plt.savefig('visualization.png')
+system = EmbeddingSystem('your-api-key')
+texts = [
+    "Vector databases store high-dimensional vectors",
+    "Embeddings capture semantic meaning",
+    "FAISS is optimized for similarity search"
+]
+system.build_vector_store(texts)
+results = system.similarity_search("What are vector databases?")
+            `} language="python" />
+          </div>
+
+          
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">3. Fine-tuning Strategies</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Fine-tuning Methods</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Full Fine-tuning</li>
+                <li>Parameter-Efficient Fine-tuning (PEFT)</li>
+                <li>LoRA (Low-Rank Adaptation)</li>
+                <li>Prompt Tuning</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Key Considerations</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Dataset quality and size</li>
+                <li>Computational resources</li>
+                <li>Model architecture</li>
+                <li>Evaluation metrics</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+            <h4 className="font-bold mb-2">Fine-tuning Best Practices</h4>
+            <p className="mb-4">
+              Effective fine-tuning requires careful consideration of several factors:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Data preparation and cleaning</li>
+              <li>Hyperparameter optimization</li>
+              <li>Validation strategies</li>
+              <li>Preventing catastrophic forgetting</li>
+            </ul>
+            
+            <div className="mt-4">
+              <h4 className="font-bold mb-2">Common Applications:</h4>
+              <ul className="list-disc list-inside space-y-2">
+                <li>Domain adaptation</li>
+                <li>Task-specific optimization</li>
+                <li>Style transfer</li>
+                <li>Bias mitigation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <h3 className="text-2xl font-medium mb-2 text-blue-400">Implementation Example</h3>
+            <CodeBlock code={`
+from transformers import Trainer, TrainingArguments
+from datasets import Dataset
+import torch
+
+class ModelFinetuner:
+    def __init__(self, model, tokenizer):
+        self.model = model
+        self.tokenizer = tokenizer
+        
+    def prepare_dataset(self, texts, labels):
+        """Prepare dataset for fine-tuning."""
+        encodings = self.tokenizer(texts, truncation=True, padding=True)
+        return Dataset.from_dict({
+            'input_ids': encodings['input_ids'],
+            'attention_mask': encodings['attention_mask'],
+            'labels': labels
+        })
+    
+    def train(self, train_dataset, eval_dataset=None):
+        """Fine-tune the model."""
+        training_args = TrainingArguments(
+            output_dir="./results",
+            num_train_epochs=3,
+            per_device_train_batch_size=8,
+            warmup_steps=500,
+            learning_rate=5e-5,
+            logging_dir="./logs",
+        )
+        
+        trainer = Trainer(
+            model=self.model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=eval_dataset
+        )
+        
+        return trainer.train()
             `} language="python" />
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">5. Animation and Interaction</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Animation and interaction bring graphics to life, creating engaging user experiences and dynamic visualizations.</p>
-            <p className="mb-4 text-gray-700">Key animation concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Keyframe animation</li>
-              <li>Tweening and easing</li>
-              <li>Event handling</li>
-              <li>Animation timing</li>
-              <li>Performance optimization</li>
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">4. Advanced Memory Management</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Memory Types</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Conversation Buffer</li>
+                <li>Summary Buffer</li>
+                <li>Vector Store</li>
+                <li>Entity Memory</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Management Strategies</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Token-based pruning</li>
+                <li>Importance sampling</li>
+                <li>Hierarchical summarization</li>
+                <li>Selective retention</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+            <h4 className="font-bold mb-2">Memory Management Techniques</h4>
+            <p className="mb-4">
+              Effective memory management is crucial for maintaining context in long conversations:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Dynamic context window adjustment</li>
+              <li>Intelligent message summarization</li>
+              <li>Priority-based memory retention</li>
+              <li>Entity tracking and relationship mapping</li>
             </ul>
+            
+            <div className="mt-4">
+              <h4 className="font-bold mb-2">Implementation Considerations:</h4>
+              <ul className="list-disc list-inside space-y-2">
+                <li>Token limit management</li>
+                <li>Memory persistence strategies</li>
+                <li>Context relevance scoring</li>
+                <li>Memory compression techniques</li>
+              </ul>
+            </div>
           </div>
+
           <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Simple Animation</h4>
+            <h3 className="text-2xl font-medium mb-2 text-blue-400">Memory Management Implementation</h3>
             <CodeBlock code={`
-class AnimatedCircle {
-    constructor(canvas) {
-        this.ctx = canvas.getContext('2d');
-        this.x = 0;
-        this.y = canvas.height / 2;
-        this.radius = 20;
-        this.dx = 2;
-    }
-    
-    draw() {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'purple';
-        this.ctx.fill();
-        this.ctx.closePath();
-    }
-    
-    update() {
-        if (this.x + this.radius > this.ctx.canvas.width || this.x - this.radius < 0) {
-            this.dx = -this.dx;
-        }
-        this.x += this.dx;
-    }
-    
-    animate() {
-        this.update();
-        this.draw();
-        requestAnimationFrame(() => this.animate());
-    }
-}
-            `} language="javascript" />
-          </div>
-        </section>
+from langchain.memory import ConversationBufferMemory
+from langchain.memory.chat_memory import BaseChatMemory
+from typing import List, Dict
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">6. Advanced Graphics Techniques</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Advanced graphics techniques enable the creation of more sophisticated and realistic visual content.</p>
-            <p className="mb-4 text-gray-700">Important advanced concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Ray tracing</li>
-              <li>Shader programming</li>
-              <li>Particle systems</li>
-              <li>Physics-based rendering</li>
-              <li>Global illumination</li>
-            </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Basic Ray Tracer</h4>
-            <CodeBlock code={`
-import numpy as np
-
-class Ray:
-    def __init__(self, origin, direction):
-        self.origin = np.array(origin)
-        self.direction = np.array(direction)
-
-class Sphere:
-    def __init__(self, center, radius, color):
-        self.center = np.array(center)
-        self.radius = radius
-        self.color = np.array(color)
-
-def ray_sphere_intersection(ray, sphere):
-    oc = ray.origin - sphere.center
-    a = np.dot(ray.direction, ray.direction)
-    b = 2 * np.dot(oc, ray.direction)
-    c = np.dot(oc, oc) - sphere.radius ** 2
-    discriminant = b ** 2 - 4 * a * c
+class AdvancedMemoryManager:
+    def __init__(self, max_tokens: int = 2000):
+        self.max_tokens = max_tokens
+        self.memory = ConversationBufferMemory()
+        self.summary_buffer = []
+        
+    def add_interaction(self, user_input: str, ai_response: str):
+        """Add new interaction to memory with token management."""
+        self.memory.save_context(
+            {"input": user_input},
+            {"output": ai_response}
+        )
+        
+        # Manage memory size
+        if self._get_token_count() > self.max_tokens:
+            self._summarize_and_prune()
     
-    if discriminant < 0:
-        return None
+    def _get_token_count(self) -> int:
+        """Estimate token count in current memory."""
+        # Implementation for token counting
+        pass
     
-    t = (-b - np.sqrt(discriminant)) / (2 * a)
-    return t if t > 0 else None
-
-# Example usage
-ray = Ray([0, 0, 0], [1, 0, 0])
-sphere = Sphere([5, 0, 0], 1, [1, 0, 0])
-t = ray_sphere_intersection(ray, sphere)
-if t is not None:
-    intersection_point = ray.origin + t * ray.direction
-    print(f"Intersection at: {intersection_point}")
+    def _summarize_and_prune(self):
+        """Summarize old memories and remove them from active memory."""
+        # Implementation for summarization
+        pass
+    
+    def get_relevant_context(self, query: str) -> str:
+        """Retrieve relevant context based on query."""
+        return self.memory.load_memory_variables({})["history"]
             `} language="python" />
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">Conclusion</h2>
-          <p className="mb-4 text-gray-700">This unit has covered the fundamental aspects of computer graphics and visualization, including:</p>
-          <ul className="list-disc list-inside mb-4 text-gray-700">
-            <li>Basic principles of computer graphics</li>
-            <li>2D and 3D graphics techniques</li>
-            <li>Data visualization methods</li>
-            <li>Animation and interaction</li>
-            <li>Advanced rendering techniques</li>
-          </ul>
-          <p className="mb-4 text-gray-700">Understanding these concepts provides a strong foundation for:</p>
-          <ul className="list-disc list-inside mb-4 text-gray-700">
-            <li>Game development</li>
-            <li>Web design and development</li>
-            <li>Scientific visualization</li>
-            <li>Computer-aided design (CAD)</li>
-            <li>Virtual and augmented reality</li>
-          </ul>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">7. Image Processing</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Image processing involves manipulating digital images to enhance or extract useful information. This field combines elements of computer vision and signal processing.</p>
-            <p className="mb-4 text-gray-700">Key image processing concepts include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Filters and convolutions</li>
-              <li>Edge detection</li>
-              <li>Color space transformations</li>
-              <li>Image enhancement techniques</li>
-              <li>Morphological operations</li>
-            </ul>
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">5. Context Window Optimization</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Optimization Techniques</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Sliding window approach</li>
+                <li>Chunk overlap strategies</li>
+                <li>Dynamic resizing</li>
+                <li>Content prioritization</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h4 className="font-bold mb-2">Performance Metrics</h4>
+              <ul className="list-disc list-inside text-gray-700">
+                <li>Response latency</li>
+                <li>Context relevance</li>
+                <li>Memory efficiency</li>
+                <li>Token utilization</li>
+              </ul>
+            </div>
           </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+            <h4 className="font-bold mb-2">Window Optimization Strategies</h4>
+            <p className="mb-4">
+              Optimizing context windows requires balancing several factors:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>Content relevance scoring</li>
+              <li>Adaptive chunk sizing</li>
+              <li>Intelligent content selection</li>
+              <li>Memory-performance tradeoffs</li>
+            </ul>
+            
+            <div className="mt-4">
+              <h4 className="font-bold mb-2">Best Practices:</h4>
+              <ul className="list-disc list-inside space-y-2">
+                <li>Regular context pruning</li>
+                <li>Dynamic window resizing</li>
+                <li>Content prioritization</li>
+                <li>Performance monitoring</li>
+              </ul>
+            </div>
+          </div>
+
           <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Basic Image Filters</h4>
+            <h3 className="text-2xl font-medium mb-2 text-blue-400">Implementation Example</h3>
             <CodeBlock code={`
-import numpy as np
-from PIL import Image
-
-def apply_kernel(image, kernel):
-    # Convert image to numpy array
-    img_array = np.array(image)
-    kernel_size = len(kernel)
-    padding = kernel_size // 2
+class ContextWindowOptimizer:
+    def __init__(self, max_tokens: int = 4096):
+        self.max_tokens = max_tokens
+        self.tokenizer = None  # Initialize with your tokenizer
+        
+    def optimize_context(self, content: str, query: str = None) -> str:
+        """Optimize content to fit within context window."""
+        tokens = self._count_tokens(content)
+        
+        if tokens <= self.max_tokens:
+            return content
+            
+        return self._apply_optimization_strategy(content, query)
     
-    # Create padded image
-    padded = np.pad(img_array, ((padding, padding), (padding, padding), (0, 0)), mode='edge')
-    result = np.zeros_like(img_array)
+    def _apply_optimization_strategy(self, content: str, query: str = None) -> str:
+        """Apply various optimization strategies based on content and query."""
+        if query:
+            # Use query-focused compression
+            return self._query_focused_compression(content, query)
+        else:
+            # Use general compression
+            return self._sliding_window_compression(content)
     
-    # Apply convolution
-    for i in range(padding, padded.shape[0] - padding):
-        for j in range(padding, padded.shape[1] - padding):
-            for c in range(3):  # RGB channels
-                window = padded[i-padding:i+padding+1, j-padding:j+padding+1, c]
-                result[i-padding, j-padding, c] = np.sum(window * kernel)
+    def _query_focused_compression(self, content: str, query: str) -> str:
+        """Compress content while maintaining query-relevant parts."""
+        # Implementation for query-focused compression
+        pass
     
-    return Image.fromarray(np.uint8(np.clip(result, 0, 255)))
-
-# Example kernels
-blur_kernel = np.ones((3, 3)) / 9
-sharpen_kernel = np.array([
-    [0, -1, 0],
-    [-1, 5, -1],
-    [0, -1, 0]
-])
-
-# Usage
-image = Image.open('input.jpg')
-blurred = apply_kernel(image, blur_kernel)
-sharpened = apply_kernel(image, sharpen_kernel)
+    def _sliding_window_compression(self, content: str) -> str:
+        """Apply sliding window compression strategy."""
+        # Implementation for sliding window compression
+        pass
             `} language="python" />
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">8. WebGL and GPU Programming</h2>
+          <h2 className="text-3xl font-semibold mb-4 text-blue-500">Conclusion and Next Steps</h2>
           <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">WebGL enables high-performance 3D graphics in web browsers by providing direct access to GPU capabilities. Understanding GPU programming is essential for creating efficient graphics applications.</p>
-            <p className="mb-4 text-gray-700">Important WebGL concepts include:</p>
+            <p className="mb-4 text-gray-700">
+              We&apos;ve covered advanced concepts in working with Language Models:
+            </p>
             <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Shader programming (GLSL)</li>
-              <li>Vertex and fragment shaders</li>
-              <li>Buffer objects and attributes</li>
-              <li>Texture mapping</li>
-              <li>WebGL context and state management</li>
+              <li>Understanding and implementing RAG systems</li>
+              <li>Working with vector databases and embeddings</li>
+              <li>Applying fine-tuning strategies</li>
+              <li>Managing memory effectively</li>
+              <li>Optimizing context windows</li>
             </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Basic WebGL Setup</h4>
-            <CodeBlock code={`
-// Vertex shader
-const vertexShaderSource = \`
-attribute vec4 aPosition;
-attribute vec4 aColor;
-varying vec4 vColor;
 
-void main() {
-    gl_Position = aPosition;
-    vColor = aColor;
-}
-\`;
-
-// Fragment shader
-const fragmentShaderSource = \`
-precision mediump float;
-varying vec4 vColor;
-
-void main() {
-    gl_FragColor = vColor;
-}
-\`;
-
-function initWebGL(canvas) {
-    const gl = canvas.getContext('webgl');
-    if (!gl) {
-        throw new Error('WebGL not supported');
-    }
-    
-    // Create shader program
-    const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
-    gl.useProgram(program);
-    
-    // Create buffers
-    const positions = new Float32Array([
-        -0.5, -0.5,
-         0.5, -0.5,
-         0.0,  0.5
-    ]);
-    
-    const colors = new Float32Array([
-        1.0, 0.0, 0.0, 1.0,
-        0.0, 1.0, 0.0, 1.0,
-        0.0, 0.0, 1.0, 1.0
-    ]);
-    
-    // Set up attributes
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-    
-    const aPosition = gl.getAttribLocation(program, 'aPosition');
-    gl.enableVertexAttribArray(aPosition);
-    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
-    
-    const colorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
-    
-    const aColor = gl.getAttribLocation(program, 'aColor');
-    gl.enableVertexAttribArray(aColor);
-    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0);
-    
-    return gl;
-}
-            `} language="javascript" />
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">9. Real-time Graphics</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Theory</h3>
-            <p className="mb-4 text-gray-700">Real-time graphics focuses on generating visual content at interactive frame rates. This is crucial for games, simulations, and interactive visualizations.</p>
-            <p className="mb-4 text-gray-700">Essential real-time graphics concepts include:</p>
+            <p className="mb-4 text-gray-700">
+              Moving forward, consider exploring:
+            </p>
             <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Frame rate optimization</li>
-              <li>Level of detail (LOD)</li>
-              <li>Culling and visibility determination</li>
-              <li>Scene graph management</li>
-              <li>Animation systems</li>
+              <li>Advanced RAG architectures</li>
+              <li>Custom embedding models</li>
+              <li>Hybrid search systems</li>
+              <li>Production deployment strategies</li>
+              <li>Performance optimization techniques</li>
             </ul>
-          </div>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Code Examples</h3>
-            <h4 className="text-xl mb-2 text-blue-300">Game Loop Implementation</h4>
-            <CodeBlock code={`
-class GameLoop {
-    constructor() {
-        this.lastTime = 0;
-        this.objects = [];
-        this.fps = 0;
-        this.frameCount = 0;
-        this.lastFpsUpdate = 0;
-    }
-    
-    addObject(object) {
-        this.objects.push(object);
-    }
-    
-    update(deltaTime) {
-        for (const object of this.objects) {
-            object.update(deltaTime);
-        }
-    }
-    
-    render(ctx) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        
-        for (const object of this.objects) {
-            object.render(ctx);
-        }
-        
-        // Display FPS
-        ctx.fillStyle = 'white';
-        ctx.fillText(\`FPS: \${Math.round(this.fps)}\`, 10, 20);
-    }
-    
-    loop(currentTime) {
-        // Convert to seconds
-        currentTime *= 0.001;
-        const deltaTime = currentTime - this.lastTime;
-        this.lastTime = currentTime;
-        
-        // Update FPS counter
-        this.frameCount++;
-        if (currentTime - this.lastFpsUpdate >= 1) {
-            this.fps = this.frameCount / (currentTime - this.lastFpsUpdate);
-            this.frameCount = 0;
-            this.lastFpsUpdate = currentTime;
-        }
-        
-        this.update(deltaTime);
-        this.render(ctx);
-        
-        requestAnimationFrame((time) => this.loop(time));
-    }
-    
-    start() {
-        this.lastTime = performance.now() * 0.001;
-        requestAnimationFrame((time) => this.loop(time));
-    }
-}
-            `} language="javascript" />
-          </div>
-        </section>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">10. Future Trends</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Emerging Technologies</h3>
-            <p className="mb-4 text-gray-700">The field of computer graphics continues to evolve with new technologies and techniques. Some important emerging trends include:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Real-time ray tracing</li>
-              <li>Machine learning in graphics</li>
-              <li>Advanced VR/AR systems</li>
-              <li>Neural rendering</li>
-              <li>Quantum computing applications</li>
-            </ul>
-            <p className="mb-4 text-gray-700">These developments are shaping the future of:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Entertainment and gaming</li>
-              <li>Scientific visualization</li>
-              <li>Digital art and design</li>
-              <li>Medical imaging</li>
-              <li>Industrial applications</li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 text-blue-500">Review and Practice</h2>
-          <div className="mb-6">
-            <h3 className="text-2xl font-medium mb-2 text-blue-400">Key Takeaways</h3>
-            <p className="mb-4 text-gray-700">Throughout this unit, weve covered:</p>
-            <ul className="list-disc list-inside mb-4 text-gray-700">
-              <li>Fundamental graphics concepts and terminology</li>
-              <li>2D and 3D graphics programming techniques</li>
-              <li>Data visualization and animation</li>
-              <li>Image processing and filtering</li>
-              <li>GPU programming and optimization</li>
-              <li>Real-time graphics systems</li>
-              <li>Emerging trends and technologies</li>
-            </ul>
-            <p className="mb-4 text-gray-700">These concepts provide a strong foundation for further study in specialized areas such as game development, scientific visualization, or computer vision.</p>
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-bold mb-2">Practical Exercises</h4>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>Build a RAG system with custom document processing</li>
+                <li>Implement a vector database from scratch</li>
+                <li>Create a fine-tuning pipeline</li>
+                <li>Develop an advanced memory management system</li>
+                <li>Optimize context windows for specific use cases</li>
+              </ol>
+            </div>
           </div>
         </section>
       </div>
-
+    </Layout>
   );
 }

@@ -99,73 +99,98 @@ const Unit3Exercises: React.FC = () => {
         <h2 className="text-3xl font-semibold mb-4 text-blue-500">Multiple Choice Questions</h2>
         
         <MultipleChoiceQuestion
-          question="Which color model is commonly used for digital displays?"
-          options={["CMYK", "RGB", "HSL", "Grayscale"]}
+          question="What is the primary purpose of RAG (Retrieval Augmented Generation)?"
+          options={[
+            "To generate random text",
+            "To combine information retrieval with language generation",
+            "To create vector embeddings",
+            "To optimize memory usage"
+          ]}
           correctAnswer={1}
         />
 
         <MultipleChoiceQuestion
-          question="What is the process of converting 3D coordinates to 2D screen coordinates called?"
-          options={["Rasterization", "Projection", "Tessellation", "Ray tracing"]}
+          question="Which technique is used for parameter-efficient fine-tuning of language models?"
+          options={[
+            "Vector Embedding",
+            "Document Chunking",
+            "LoRA (Low-Rank Adaptation)",
+            "Cosine Similarity"
+          ]}
+          correctAnswer={2}
+        />
+
+        <MultipleChoiceQuestion
+          question="What is the purpose of a Vector Database in RAG systems?"
+          options={[
+            "To store raw text documents",
+            "To process images",
+            "To store and query high-dimensional vectors",
+            "To generate embeddings"
+          ]}
+          correctAnswer={2}
+        />
+
+        <MultipleChoiceQuestion
+          question="What is Catastrophic Forgetting in the context of LLMs?"
+          options={[
+            "When a model crashes during training",
+            "When a model loses previously learned information during fine-tuning",
+            "When a model's memory is full",
+            "When a model fails to generate responses"
+          ]}
           correctAnswer={1}
         />
 
         <MultipleChoiceQuestion
-          question="Which graphics primitive is NOT commonly used in vector graphics?"
-          options={["Line", "Circle", "Pixel", "Polygon"]}
+          question="Which metric is commonly used to measure similarity between vectors in embedding space?"
+          options={[
+            "Euclidean distance",
+            "Manhattan distance",
+            "Cosine similarity",
+            "Hamming distance"
+          ]}
           correctAnswer={2}
         />
 
         <MultipleChoiceQuestion
-          question="What type of shader is responsible for determining the final color of a pixel?"
-          options={["Vertex shader", "Geometry shader", "Fragment shader", "Compute shader"]}
-          correctAnswer={2}
-        />
-
-        <MultipleChoiceQuestion
-          question="Which file format is typically used for vector graphics?"
-          options={["JPG", "PNG", "SVG", "GIF"]}
-          correctAnswer={2}
-        />
-
-        <MultipleChoiceQuestion
-          question="What technique is used to make 3D objects appear smooth despite having a limited number of polygons?"
-          options={["Anti-aliasing", "Texture mapping", "Normal mapping", "Mip mapping"]}
-          correctAnswer={2}
+          question="What is the purpose of Document Chunking in RAG systems?"
+          options={[
+            "To compress documents",
+            "To break documents into smaller pieces for efficient processing",
+            
+            "To encrypt documents",
+            "To format documents"
+          ]}
+          correctAnswer={1}
         />
       </section>
 
       <section className="mb-12">
-        <h2 className="text-3xl font-semibold mb-4 text-blue-500">Graphics Calculations</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-blue-500">Technical Calculations</h2>
 
         <GraphicsExercise
-          question="Calculate the aspect ratio of a 1920x1080 display (express as a decimal to 2 places):"
-          inputPlaceholder="Enter aspect ratio"
-          checkAnswer={(input: string) => parseFloat(input) === 1.78}
+          question="If a vector has dimensions of 1536, and you want to store 1 million vectors, how many GB of storage would you need? (assuming 4 bytes per number, round to 2 decimal places)"
+          inputPlaceholder="Enter size in GB"
+          checkAnswer={(input: string) => parseFloat(input) === 5.73}
         />
 
         <GraphicsExercise
-          question="How many total pixels are in a 4K display (3840x2160)?"
-          inputPlaceholder="Enter number of pixels"
-          checkAnswer={(input: string) => parseInt(input) === 8294400}
+          question="If your context window is 8K tokens and each chunk is 512 tokens, how many chunks can fit in the context window while leaving 1K tokens for the response?"
+          inputPlaceholder="Enter number of chunks"
+          checkAnswer={(input: string) => parseInt(input) === 13}
         />
 
         <GraphicsExercise
-          question="Convert RGB(255, 0, 0) to hexadecimal:"
-          inputPlaceholder="Enter hex code (include #)"
-          checkAnswer={(input: string) => input.toLowerCase() === "#ff0000"}
+          question="If your embedding model processes 100 tokens per second, how long (in seconds) would it take to process a document with 25,000 tokens?"
+          inputPlaceholder="Enter time in seconds"
+          checkAnswer={(input: string) => parseInt(input) === 250}
         />
 
         <GraphicsExercise
-          question="Calculate the rotation matrix determinant: [[cos θ, -sin θ], [sin θ, cos θ]] where θ = 90°"
-          inputPlaceholder="Enter determinant"
-          checkAnswer={(input: string) => parseFloat(input) === 1}
-        />
-
-        <GraphicsExercise
-          question="If a screen refreshes at 60 FPS, what is the time per frame in milliseconds?"
-          inputPlaceholder="Enter time in ms"
-          checkAnswer={(input: string) => parseFloat(input) === 16.67}
+          question="Calculate the cosine similarity between vectors [1,1] and [0,1] (round to 2 decimal places):"
+          inputPlaceholder="Enter similarity value"
+          checkAnswer={(input: string) => parseFloat(input) === 0.71}
         />
       </section>
 
@@ -173,61 +198,63 @@ const Unit3Exercises: React.FC = () => {
         <h2 className="text-3xl font-semibold mb-4 text-blue-500">Code Exercises</h2>
         
         <div className="mb-8">
-          <h3 className="text-xl mb-4">1. Basic Shape Drawing</h3>
-          <p className="mb-4">Implement a function to draw a regular polygon with n sides:</p>
+          <h3 className="text-xl mb-4">1. Document Chunking</h3>
+          <p className="mb-4">Implement a function to chunk a document based on token count:</p>
           <CodeBlock code={`
-def draw_regular_polygon(ctx, x, y, radius, sides):
+def chunk_document(text: str, chunk_size: int, overlap: int) -> list:
     """
-    Draw a regular polygon using HTML5 Canvas
-    ctx: canvas context
-    x, y: center coordinates
-    radius: radius of circumscribed circle
-    sides: number of sides
+    Split a document into chunks with specified size and overlap
+    text: input document
+    chunk_size: maximum tokens per chunk
+    overlap: number of overlapping tokens between chunks
+    Returns: list of chunks
     """
     # Your implementation here
     pass
 
 # Example usage:
-# draw_regular_polygon(ctx, 100, 100, 50, 6)  # Draws a hexagon
+# chunks = chunk_document("Your long document here...", 512, 50)
           `} language="python" />
         </div>
 
         <div className="mb-8">
-          <h3 className="text-xl mb-4">2. Color Space Conversion</h3>
-          <p className="mb-4">Implement RGB to HSL conversion:</p>
+          <h3 className="text-xl mb-4">2. Vector Similarity</h3>
+          <p className="mb-4">Implement cosine similarity calculation:</p>
           <CodeBlock code={`
-def rgb_to_hsl(r: int, g: int, b: int) -> tuple:
+def cosine_similarity(vec1: list, vec2: list) -> float:
     """
-    Convert RGB (0-255) to HSL (0-360°, 0-100%, 0-100%)
-    Returns: (hue, saturation, lightness)
+    Calculate cosine similarity between two vectors
+    Returns: similarity score between -1 and 1
     """
     # Your implementation here
     pass
 
 # Test cases:
-print(rgb_to_hsl(255, 0, 0))    # Should output approximately (0, 100, 50)
-print(rgb_to_hsl(0, 255, 0))    # Should output approximately (120, 100, 50)
-          `} language="javascript" />
+print(cosine_similarity([1,0], [1,0]))     # Should output 1.0
+print(cosine_similarity([1,0], [0,1]))     # Should output 0.0
+          `} language="python" />
         </div>
 
         <div className="mb-8">
-          <h3 className="text-xl mb-4">3. 3D Transformation</h3>
-          <p className="mb-4">Implement a 3D rotation matrix around the Y axis:</p>
+          <h3 className="text-xl mb-4">3. RAG Pipeline</h3>
+          <p className="mb-4">Implement a basic RAG retrieval function:</p>
           <CodeBlock code={`
-def create_y_rotation_matrix(angle_degrees: float) -> list:
+async function retrieveRelevantDocuments(
+  query: string,
+  vectorStore: VectorStore,
+  numResults: number = 3
+): Promise<Document[]> {
     """
-    Create a 3x3 rotation matrix for rotation around Y axis
-    angle_degrees: rotation angle in degrees
-    Returns: 3x3 matrix as nested list
+    Retrieve relevant documents for a query using vector similarity
+    Returns: Array of most relevant documents
     """
-    # Your implementation here
+    // Your implementation here
     pass
+}
 
-# Test case:
-matrix = create_y_rotation_matrix(90)
-point = [1, 0, 0]
-# Rotating [1,0,0] by 90° should give approximately [0,0,-1]
-          `} language="python" />
+// Example usage:
+// const docs = await retrieveRelevantDocuments("How does RAG work?", vectorStore);
+          `} language="typescript" />
         </div>
       </section>
 
@@ -235,28 +262,31 @@ point = [1, 0, 0]
         <h2 className="text-3xl font-semibold mb-4 text-blue-500">Challenge Problems</h2>
         
         <div className="mb-8">
-          <h3 className="text-xl mb-4">Ray-Triangle Intersection</h3>
-          <p className="mb-4">Implement the Möller–Trumbore ray-triangle intersection algorithm:</p>
+          <h3 className="text-xl mb-4">Hybrid Search Implementation</h3>
+          <p className="mb-4">Implement a hybrid search combining vector and keyword search:</p>
           <CodeBlock code={`
-def ray_triangle_intersection(
-    ray_origin: list,
-    ray_direction: list,
-    vertex0: list,
-    vertex1: list,
-    vertex2: list
-) -> tuple:
-    """
-    Implement ray-triangle intersection using Möller–Trumbore algorithm
-    Returns: (bool: hit, float: distance) or (False, None) if no hit
-    """
-    # Your implementation here
-    pass
+class HybridSearch:
+    def __init__(self, vector_store, keyword_index):
+        self.vector_store = vector_store
+        self.keyword_index = keyword_index
 
-# Test case:
-ray_origin = [0, 0, 0]
-ray_direction = [0, 0, 1]
-triangle = ([0, 1, 2], [1, -1, 2], [-1, -1, 2])
-result = ray_triangle_intersection(ray_origin, ray_direction, *triangle)
+    def search(
+        self,
+        query: str,
+        alpha: float = 0.5,
+        top_k: int = 5
+    ) -> list:
+        """
+        Implement hybrid search combining vector similarity and keyword matching
+        alpha: weight between vector (alpha) and keyword (1-alpha) scores
+        Returns: list of ranked documents
+        """
+        # Your implementation here
+        pass
+
+# Example usage:
+# searcher = HybridSearch(vector_store, keyword_index)
+# results = searcher.search("What is RAG?", alpha=0.7)
           `} language="python" />
         </div>
       </section>

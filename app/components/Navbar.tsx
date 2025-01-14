@@ -15,10 +15,15 @@ const ModernNavbar = ({ className }: NavbarProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const dropdownRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  
   const [scrolled, setScrolled] = useState(false);
 
-  // Handle scrolling effect
+  // Update scroll effect to run only after component mounts
   useEffect(() => {
+    // Set initial scroll state
+    setScrolled(window.scrollY > 20);
+    
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
